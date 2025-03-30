@@ -1,3 +1,5 @@
+// iOS Calculator Mock
+
 const body = document.body;
 body.style.margin = '0';
 body.style.background = '#000';
@@ -98,12 +100,20 @@ buttons.forEach(({ text, class: cls, action }) => {
   btn.onclick = action;
   btn.style.fontSize = '24px';
   btn.style.border = 'none';
-  btn.style.borderRadius = '50%';
-  btn.style.padding = '20px';
   btn.style.cursor = 'pointer';
   btn.style.color = cls === 'gray' ? 'black' : 'white';
-  btn.style.gridColumn = text === '0' ? 'span 2' : 'span 1';
-  btn.style.borderRadius = text === '0' ? '50px' : '50%';
+
+  // Set size and shape
+  if (text === '0') {
+    btn.style.gridColumn = 'span 2';
+    btn.style.borderRadius = '50px';
+    btn.style.width = '144px';
+    btn.style.height = '64px';
+  } else {
+    btn.style.width = '64px';
+    btn.style.height = '64px';
+    btn.style.borderRadius = '50%';
+  }
 
   switch (cls) {
     case 'gray': btn.style.background = '#a5a5a5'; break;
