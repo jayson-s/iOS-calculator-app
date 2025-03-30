@@ -1,5 +1,3 @@
-// iOS Calculator Mock
-
 const body = document.body;
 body.style.margin = '0';
 body.style.background = '#000';
@@ -103,7 +101,6 @@ buttons.forEach(({ text, class: cls, action }) => {
   btn.style.cursor = 'pointer';
   btn.style.color = cls === 'gray' ? 'black' : 'white';
 
-  // Set size and shape
   if (text === '0') {
     btn.style.gridColumn = 'span 2';
     btn.style.borderRadius = '50px';
