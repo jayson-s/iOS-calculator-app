@@ -34,14 +34,37 @@ calculator.appendChild(buttonsContainer);
 body.appendChild(calculator);
 
 let current = '';
+const operators = ['+', '-', '*', '/'];
 
 function input(value) {
+  const lastChar = current.slice(-1);
+
+  // Prevent two consecutive operators
+  if (operators.includes(value) && operators.includes(lastChar)) {
+    return;
+  }
+
+  // Prevent starting with closing parenthesis or invalid sequences
+  if ((value === ')' && current === '') || (value === ')' && !isParenthesesBalanced(current + value))) {
+    return;
+  }
+
   if (display.innerText === '0' && value !== '.') {
     current = value;
   } else {
     current += value;
   }
   display.innerText = current;
+}
+
+function isParenthesesBalanced(expr) {
+  let balance = 0;
+  for (let char of expr) {
+    if (char === '(') balance++;
+    else if (char === ')') balance--;
+    if (balance < 0) return false;
+  }
+  return balance === 0;
 }
 
 function clearDisplay() {
@@ -62,6 +85,11 @@ function toggleSign() {
 
 function calculate() {
   try {
+    if (!isParenthesesBalanced(current)) {
+      display.innerText = 'Error';
+      current = '';
+      return;
+    }
     current = eval(current).toString();
     display.innerText = current;
   } catch (e) {
@@ -73,22 +101,23 @@ function calculate() {
 const buttons = [
   { text: 'AC', class: 'gray', action: clearDisplay },
   { text: '%', class: 'gray', action: () => input('%') },
-  { text: '±', class: 'gray', action: toggleSign },
-  { text: '÷', class: 'orange', action: () => input('/') },
+  { text: '(', class: 'gray', action: () => input('(') },
+  { text: ')', class: 'gray', action: () => input(')') },
   { text: '7', class: 'dark', action: () => input('7') },
   { text: '8', class: 'dark', action: () => input('8') },
   { text: '9', class: 'dark', action: () => input('9') },
-  { text: '×', class: 'orange', action: () => input('*') },
+  { text: '÷', class: 'orange', action: () => input('/') },
   { text: '4', class: 'dark', action: () => input('4') },
   { text: '5', class: 'dark', action: () => input('5') },
   { text: '6', class: 'dark', action: () => input('6') },
-  { text: '−', class: 'orange', action: () => input('-') },
+  { text: '×', class: 'orange', action: () => input('*') },
   { text: '1', class: 'dark', action: () => input('1') },
   { text: '2', class: 'dark', action: () => input('2') },
   { text: '3', class: 'dark', action: () => input('3') },
-  { text: '+', class: 'orange', action: () => input('+') },
+  { text: '−', class: 'orange', action: () => input('-') },
   { text: '0', class: 'dark wide', action: () => input('0') },
   { text: '.', class: 'dark', action: () => input('.') },
+  { text: '+', class: 'orange', action: () => input('+') },
   { text: '=', class: 'orange', action: calculate },
 ];
 
