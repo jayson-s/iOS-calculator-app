@@ -9,7 +9,7 @@ body.style.alignItems = 'center';
 body.style.height = '100vh';
 
 const calculator = document.createElement('div');
-calculator.style.width = '320px';
+calculator.style.width = '350px';
 calculator.style.background = '#1c1c1c';
 calculator.style.borderRadius = '40px';
 calculator.style.padding = '20px';
